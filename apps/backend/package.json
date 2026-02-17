@@ -1,0 +1,14 @@
+{
+  "name": "onboardy-backend",
+  "version": "1.0.0",
+  "description": "The backend server for the onboardy application.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "author": "Omar Fandiño <omaryesidfa@gmail.com> (https://yeomfa.me)",
+  "license": "ISC",
+  "type": "module"
+}
