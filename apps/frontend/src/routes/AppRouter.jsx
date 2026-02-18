@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { DetailForm, Hero, Login, NotFound } from '../pages';
 import { MainLayout } from '../shared/components/layouts/MainLayout';
 import { ProtectedRoute } from './ProtectedRoute';
@@ -9,7 +9,10 @@ export function AppRouter() {
 
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
+      <Route
+        path="/login"
+        element={!isAuthenticated ? <Login /> : <Navigate to="/" />}
+      />
 
       <Route element={<MainLayout />}>
         <Route path="/" element={<Hero />} />
