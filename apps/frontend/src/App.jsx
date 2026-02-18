@@ -1,7 +1,9 @@
-import "./App.css";
+import './App.css';
+import { AppRouter } from './routes/AppRouter';
+import Navbar from './shared/components/ui/Navbar';
 
 function App() {
-  return <h1 className="text-3xl font-bold text-brand">Hello, Onboardy!</h1>;
+  return <AppRouter />;
 }
 
 export default App;
