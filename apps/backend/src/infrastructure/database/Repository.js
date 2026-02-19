@@ -21,20 +21,20 @@ export class Repository {
     }
   }
 
-  async update(updatedData) {
+  async update(newItem) {
     try {
       const data = await readFile(this.path, 'utf-8');
       const dataArr = JSON.parse(data);
 
-      const item = dataArr.find((item) => item.id === updatedData.id);
+      const item = dataArr.find((item) => item.id === newItem.id);
 
       const updatedItem = {
         ...item,
-        ...updatedData,
+        ...newItem,
       };
 
       const updatedDataArr = dataArr.map((item) => {
-        if (item.id === updatedData.id) {
+        if (item.id === newItem.id) {
           return updatedItem;
         }
         return item;
