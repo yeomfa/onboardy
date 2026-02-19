@@ -17,10 +17,10 @@ function Navbar() {
 
           {!isAuthenticated && (
             <NavLink
-              to="/login"
+              to="/registration"
               className="text-gray-600 hover:text-brand mx-2"
             >
-              Login
+              Registration
             </NavLink>
           )}
 
