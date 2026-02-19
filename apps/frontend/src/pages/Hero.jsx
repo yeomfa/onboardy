@@ -1,11 +1,14 @@
+import { Button } from '@heroui/react';
 import {
   LayoutIcon,
   ShieldCheckIcon,
   SpeedometerIcon,
 } from '@phosphor-icons/react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export function Hero() {
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-180px)] text-center px-4">
       <img
@@ -16,12 +19,10 @@ export function Hero() {
       <p className="text-lg text-gray-700 mb-8">
         Your all-in-one solution to handle your company information.
       </p>
-      <Link
-        to="/details"
-        className="inline-block bg-brand text-white px-6 py-3 rounded-xl transition duration-300"
-      >
+
+      <Button onClick={() => navigate('/registration')} size="lg">
         Get Started
-      </Link>
+      </Button>
 
       <ul className="flex mt-20 justify-center items-center gap-8">
         <li className="flex items-center justify-center">
