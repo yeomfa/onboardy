@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export function Registration() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen gap-12 px-4 bg-gray-50">
+    <div className="flex flex-col items-center justify-center min-h-screen gap-12 px-4 bg-gray-500/3">
       <div className="w-full max-w-md bg-white border border-gray-200 border-l-accent border-b-accent border-l-2 border-b-2 rounded-2xl p-8">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold text-gray-800">

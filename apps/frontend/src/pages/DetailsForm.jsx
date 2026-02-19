@@ -24,8 +24,10 @@ export function DetailsForm() {
   const onSubmit = (data) => console.log(data);
 
   return (
-    <div className="">
-      <Alert status="accent" className="items-center">
+    <div className="bg-gray-500/3 p-8 rounded-4xl">
+      <h1 className="text-2xl font-medium text-gray-800">Details Form</h1>
+
+      <Alert status="accent" className="items-center mt-6">
         <Alert.Indicator />
         <Alert.Content>
           <Alert.Description>
@@ -36,7 +38,6 @@ export function DetailsForm() {
           </Alert.Description>
         </Alert.Content>
       </Alert>
-      <h1 className="text-2xl font-medium text-gray-800 mt-6">Details Form</h1>
 
       <Form
         onSubmit={handleSubmit(onSubmit)}

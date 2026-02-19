@@ -25,15 +25,15 @@ export function Hero() {
       </Button>
 
       <ul className="flex mt-20 justify-center items-center gap-8">
-        <li className="flex items-center justify-center">
+        <li className="flex items-center justify-center bg-gray-50 rounded-xl px-4 py-2">
           <SpeedometerIcon className="w-6 h-6 mr-2" />
           <span>Real-time updates</span>
         </li>
-        <li className="flex items-center justify-center">
+        <li className="flex items-center justify-center bg-gray-50 rounded-xl px-4 py-2">
           <LayoutIcon className="w-6 h-6 mr-2" />
           <span>Easy to use interface</span>
         </li>
-        <li className="flex items-center justify-center">
+        <li className="flex items-center justify-center bg-gray-50 rounded-xl px-4 py-2">
           <ShieldCheckIcon className="w-6 h-6 mr-2" />
           <span>Secure and reliable</span>
         </li>
