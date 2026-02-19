@@ -13,9 +13,9 @@ export function Registration() {
           <img src="/onboardy.svg" alt="Onboardy Logo" className="w-10 h-10" />
         </div>
         <form className="flex flex-col gap-4">
-          <Label htmlFor="identification-number">Identification number</Label>
+          <Label htmlFor="identificationNumber">Identification number</Label>
           <Input
-            id="identification-number"
+            id="identificationNumber"
             min={0}
             placeholder="Enter the identification number"
             type="number"

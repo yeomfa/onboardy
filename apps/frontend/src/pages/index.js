@@ -1,4 +1,4 @@
 export * from './Hero';
 export * from './Registration';
-export * from './DetailForm';
+export * from './DetailsForm';
 export * from './NotFound';

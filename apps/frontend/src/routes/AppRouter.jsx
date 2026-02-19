@@ -1,11 +1,11 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { DetailForm, Hero, Registration, NotFound } from '../pages';
+import { DetailsForm, Hero, Registration, NotFound } from '../pages';
 import { MainLayout } from '../shared/components/layouts/MainLayout';
 import { ProtectedRoute } from './ProtectedRoute';
 
 export function AppRouter() {
   // TODO: Replace with real authentication logic
-  const isAuthenticated = false;
+  const isAuthenticated = true;
 
   return (
     <Routes>
@@ -18,7 +18,7 @@ export function AppRouter() {
         <Route path="/" element={<Hero />} />
 
         <Route element={<ProtectedRoute isAllowed={isAuthenticated} />}>
-          <Route path="/details" element={<DetailForm />} />
+          <Route path="/details" element={<DetailsForm />} />
         </Route>
       </Route>
 
