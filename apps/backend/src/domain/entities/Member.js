@@ -18,11 +18,11 @@ export class Member {
     }
   }
 
-  update(newData) {
-    this.identificationNumber =
-      newData.identificationNumber || this.identificationNumber;
-    this.identificationType =
-      newData.identificationType || this.identificationType;
-    this.validate();
+  toObject() {
+    return {
+      id: this.id,
+      identificationNumber: this.identificationNumber,
+      identificationType: this.identificationType,
+    };
   }
 }
