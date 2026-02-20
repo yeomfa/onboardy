@@ -22,7 +22,7 @@ const identificationTypes = [
 ];
 
 export function DetailsForm() {
-  const { token } = useContext(AuthContext);
+  const { token, updateIsAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const {
@@ -48,21 +48,22 @@ export function DetailsForm() {
 
         const result = await res.json();
         reset(result.data.member);
-      } catch (error) {
+      } catch {
         notify.error(
           'Error',
           'Session expired or invalid. Please login again.',
         );
+        updateIsAuthenticated(null);
         navigate('/registration');
       }
     };
 
     if (token) fetchMemberData();
-  }, [token, reset, navigate]);
+  }, [token, reset, navigate, updateIsAuthenticated]);
 
   const onSubmit = async (data) => {
     try {
-      const res = await fetch('/api/api/v1/members/update', {
+      const res = await fetch('/api/api/v1/members/me', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
