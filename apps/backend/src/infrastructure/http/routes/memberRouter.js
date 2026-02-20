@@ -3,18 +3,13 @@ import { authMiddleware } from '../middlewares/auth.js';
 
 export const createMemberRouter = (memberController, jwtService) => {
   const router = Router();
+  const auth = authMiddleware(jwtService);
 
-  router.get(
-    '/me',
-    authMiddleware(jwtService),
-    memberController.getMe.bind(memberController),
-  );
-
-  router.patch(
-    '/update',
-    authMiddleware(jwtService),
-    memberController.updateMe.bind(memberController),
-  );
+  router
+    .route('/me')
+    .all(auth)
+    .get(memberController.getMe.bind(memberController))
+    .patch(memberController.updateMe.bind(memberController));
 
   router
     .route('/:id')
