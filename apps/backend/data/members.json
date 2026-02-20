@@ -2,16 +2,43 @@
   {
     "id": 1,
     "identificationNumber": 900674336,
-    "identificationType": "nit"
+    "identificationType": "nit",
+    "email": "member1@example.com",
+    "cellphone": "1234567890",
+    "companyName": "Company A",
+    "firstName": "",
+    "secondName": "",
+    "firstLastName": "",
+    "secondLastName": "",
+    "authorizeEmail": false,
+    "authorizeSms": false
   },
   {
     "id": 2,
     "identificationNumber": 811033098,
-    "identificationType": "nit"
+    "identificationType": "nit",
+    "email": "member2@example.com",
+    "cellphone": "1987654321",
+    "companyName": "Company B",
+    "firstName": "",
+    "secondName": "",
+    "firstLastName": "",
+    "secondLastName": "",
+    "authorizeEmail": false,
+    "authorizeSms": false
   },
   {
     "id": 3,
     "identificationNumber": 12345678,
-    "identificationType": "cc"
+    "identificationType": "cc",
+    "email": "member3@example.com",
+    "cellphone": "1234567890",
+    "companyName": "",
+    "firstName": "Jane",
+    "secondName": "",
+    "firstLastName": "Doe",
+    "secondLastName": "",
+    "authorizeEmail": false,
+    "authorizeSms": false
   }
 ]

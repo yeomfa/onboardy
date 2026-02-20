@@ -1,7 +1,8 @@
 export class MemberController {
-  constructor(updateMemberUC, loginMemberUC) {
+  constructor(updateMemberUC, loginMemberUC, getMemberUC) {
     this.updateMemberUC = updateMemberUC;
     this.loginMemberUC = loginMemberUC;
+    this.getMemberUC = getMemberUC;
   }
 
   async login(req, res) {
@@ -23,10 +24,21 @@ export class MemberController {
   }
 
   async get(req, res) {
-    res.status(200).json({
-      status: 'ok',
-      message: 'In development...',
-    });
+    try {
+      const id = +req.params.id;
+      const member = await this.getMemberUC.execute(id);
+      res.status(200).json({
+        status: 'ok',
+        data: {
+          member,
+        },
+      });
+    } catch (error) {
+      res.status(404).json({
+        status: 'error',
+        message: error.message,
+      });
+    }
   }
 
   async update(req, res) {
