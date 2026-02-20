@@ -26,19 +26,5 @@
     "secondLastName": "",
     "authorizeEmail": true,
     "authorizeSms": true
-  },
-  {
-    "id": 3,
-    "identificationNumber": "1234567890",
-    "identificationType": "nit",
-    "email": "member3@example.com",
-    "cellphone": "1234567890",
-    "companyName": "Company 3",
-    "firstName": "Jane",
-    "secondName": "Miley",
-    "firstLastName": "Doe",
-    "secondLastName": "",
-    "authorizeEmail": true,
-    "authorizeSms": true
   }
 ]

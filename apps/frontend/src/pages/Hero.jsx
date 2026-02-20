@@ -20,7 +20,7 @@ export function Hero() {
         Your all-in-one solution to handle your company information.
       </p>
 
-      <Button onPress={() => navigate('/details')} size="lg">
+      <Button onPress={() => navigate('/registration')} size="lg">
         Get Started
       </Button>
 
