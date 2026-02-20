@@ -4,32 +4,48 @@ export class MemberController {
     this.loginMemberUC = loginMemberUC;
   }
 
-  login(req, res) {
-    const { identificationNumber } = req.body;
-    const token = this.loginMemberUC.execute(identificationNumber);
-    res.status(200).json({
-      status: 'ok',
-      data: {
-        token,
-      },
-    });
+  async login(req, res) {
+    try {
+      const { identificationNumber } = req.body;
+      const token = await this.loginMemberUC.execute(identificationNumber);
+      res.status(200).json({
+        status: 'ok',
+        data: {
+          token,
+        },
+      });
+    } catch (error) {
+      res.status(404).json({
+        status: 'error',
+        message: error.message,
+      });
+    }
   }
 
-  get(req, res) {
+  async get(req, res) {
     res.status(200).json({
       status: 'ok',
       message: 'In development...',
     });
   }
 
-  update(req, res) {
-    const newData = req.body;
-    const updatedMember = this.updateMemberUC.execute(newData);
-    res.status(200).json({
-      status: 'ok',
-      data: {
-        member: updatedMember,
-      },
-    });
+  async update(req, res) {
+    try {
+      const id = +req.params.id;
+      const newData = req.body;
+      const updatedMember = await this.updateMemberUC.execute(id, newData);
+
+      res.status(200).json({
+        status: 'ok',
+        data: {
+          member: updatedMember,
+        },
+      });
+    } catch (error) {
+      res.status(404).json({
+        status: 'error',
+        message: error.message,
+      });
+    }
   }
 }

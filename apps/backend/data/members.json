@@ -8,5 +8,10 @@
     "id": 2,
     "identificationNumber": 811033098,
     "identificationType": "nit"
+  },
+  {
+    "id": 3,
+    "identificationNumber": 12345678,
+    "identificationType": "cc"
   }
 ]

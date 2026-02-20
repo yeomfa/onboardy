@@ -7,7 +7,6 @@ export class Repository {
   path = '';
   constructor(path) {
     this.path = `${dirname}/../../..${path}`;
-    console.log('Repository path: ', this.path);
   }
 
   async findById(id) {

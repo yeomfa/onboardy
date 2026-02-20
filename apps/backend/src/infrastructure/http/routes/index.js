@@ -6,7 +6,7 @@ export const createAppRouter = (controllers) => {
   const router = Router();
 
   router.use('/health', createHealthRouter(controllers.health));
-  router.use('/member', createMemberRouter(controllers.member));
+  router.use('/members', createMemberRouter(controllers.member));
 
   return router;
 };

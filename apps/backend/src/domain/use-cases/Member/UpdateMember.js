@@ -5,14 +5,15 @@ export class UpdateMember {
     this.memberRepository = memberRepository;
   }
 
-  async execute(newData) {
+  async execute(id, newData) {
     try {
-      const memberObj = await this.memberRepository.findById(newData.id);
+      const memberObj = await this.memberRepository.findById(id);
+
       if (!memberObj) {
         throw new Error('Member not found');
       }
 
-      const member = new Member(memberObj);
+      const member = new Member({ ...memberObj, ...newData });
 
       return await this.memberRepository.update(member.toObject());
     } catch (error) {
