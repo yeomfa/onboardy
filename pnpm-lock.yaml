@@ -2801,12 +2801,12 @@ snapshots:
       '@react-aria/listbox': 3.15.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@react-aria/searchfield': 3.8.11(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@react-aria/textfield': 3.18.4(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      '@react-aria/utils': 3.32.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@react-aria/utils': 3.33.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@react-stately/autocomplete': 3.0.0-beta.4(react@19.2.4)
       '@react-stately/combobox': 3.12.2(react@19.2.4)
       '@react-types/autocomplete': 3.0.0-alpha.36(react@19.2.4)
       '@react-types/button': 3.15.0(react@19.2.4)
-      '@react-types/shared': 3.32.1(react@19.2.4)
+      '@react-types/shared': 3.33.0(react@19.2.4)
       '@swc/helpers': 0.5.18
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
@@ -3363,8 +3363,8 @@ snapshots:
     dependencies:
       '@react-aria/focus': 3.21.4(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@react-aria/i18n': 3.12.15(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      '@react-aria/utils': 3.32.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      '@react-types/shared': 3.32.1(react@19.2.4)
+      '@react-aria/utils': 3.33.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@react-types/shared': 3.33.0(react@19.2.4)
       '@swc/helpers': 0.5.18
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
@@ -3707,7 +3707,7 @@ snapshots:
     dependencies:
       '@react-types/combobox': 3.13.11(react@19.2.4)
       '@react-types/searchfield': 3.6.7(react@19.2.4)
-      '@react-types/shared': 3.32.1(react@19.2.4)
+      '@react-types/shared': 3.33.0(react@19.2.4)
       react: 19.2.4
 
   '@react-types/breadcrumbs@3.7.18(react@19.2.4)':
