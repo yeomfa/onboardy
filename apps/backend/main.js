@@ -1,5 +1,4 @@
 import 'dotenv/config';
-import jwt from 'jsonwebtoken';
 
 import { HealthController } from './src/infrastructure/http/controllers/HealthController.js';
 import { MemberController } from './src/infrastructure/http/controllers/MemberController.js';
@@ -9,21 +8,12 @@ import { UpdateMember } from './src/domain/use-cases/Member/UpdateMember.js';
 import { LoginMember } from './src/domain/use-cases/Member/LoginMember.js';
 import { MemberRepository } from './src/infrastructure/database/MemberRepository.js';
 import { GetMember } from './src/domain/use-cases/Member/GetMember.js';
+import { JwtService } from './src/infrastructure/services/JwtService.js';
 
 const { PORT = 3000, JWT_SECRET = 'temp_jwt_secret' } = process.env;
 
-const jwtService = {
-  sign: (payload) => {
-    return jwt.sign(payload, JWT_SECRET, { expiresIn: '2h' });
-  },
-  verify: (token) => {
-    try {
-      return jwt.verify(token, JWT_SECRET);
-    } catch (error) {
-      throw new Error('Invalid token');
-    }
-  },
-};
+// Services
+const jwtService = new JwtService(JWT_SECRET);
 
 // Improve this with a subclass of Repository for members, and move it to a separate file
 const memberRepository = new MemberRepository();
@@ -45,7 +35,7 @@ const controllers = {
   member: memberController,
 };
 
-const appRouter = createAppRouter(controllers);
+const appRouter = createAppRouter(controllers, jwtService);
 
 const server = createServer(appRouter);
 

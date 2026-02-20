@@ -1,7 +1,14 @@
 import { Router } from 'express';
+import { authMiddleware } from '../middlewares/auth.js';
 
-export const createMemberRouter = (memberController) => {
+export const createMemberRouter = (memberController, jwtService) => {
   const router = Router();
+
+  router.get(
+    '/me',
+    authMiddleware(jwtService),
+    memberController.getMe.bind(memberController),
+  );
 
   router
     .route('/:id')

@@ -41,6 +41,24 @@ export class MemberController {
     }
   }
 
+  async getMe(req, res) {
+    try {
+      const id = req.user.id;
+      const member = await this.getMemberUC.execute(id);
+      res.status(200).json({
+        status: 'ok',
+        data: {
+          member,
+        },
+      });
+    } catch (error) {
+      res.status(404).json({
+        status: 'error',
+        message: error.message,
+      });
+    }
+  }
+
   async update(req, res) {
     try {
       const id = +req.params.id;

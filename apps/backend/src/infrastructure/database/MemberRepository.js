@@ -11,7 +11,7 @@ export class MemberRepository extends Repository {
       const data = await readFile(this.path, 'utf-8');
       const dataArr = JSON.parse(data);
       const result = dataArr.find(
-        (item) => item.identificationNumber === identificationNumber,
+        (item) => item.identificationNumber === +identificationNumber,
       );
       return result;
     } catch (error) {
