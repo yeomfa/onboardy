@@ -78,4 +78,24 @@ export class MemberController {
       });
     }
   }
+
+  async updateMe(req, res) {
+    try {
+      const id = req.user.id;
+      const newData = req.body;
+      const updatedMember = await this.updateMemberUC.execute(id, newData);
+
+      res.status(200).json({
+        status: 'ok',
+        data: {
+          member: updatedMember,
+        },
+      });
+    } catch (error) {
+      res.status(404).json({
+        status: 'error',
+        message: error.message,
+      });
+    }
+  }
 }

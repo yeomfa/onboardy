@@ -10,6 +10,12 @@ export const createMemberRouter = (memberController, jwtService) => {
     memberController.getMe.bind(memberController),
   );
 
+  router.patch(
+    '/update',
+    authMiddleware(jwtService),
+    memberController.updateMe.bind(memberController),
+  );
+
   router
     .route('/:id')
     .get(memberController.get.bind(memberController))
