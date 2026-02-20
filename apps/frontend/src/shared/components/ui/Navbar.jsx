@@ -1,8 +1,14 @@
+import { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { AuthContext } from '../../auth/AuthContext';
+import { Button } from '@heroui/react';
 
 function Navbar() {
-  // TODO: Replace with real authentication logic
-  const isAuthenticated = true;
+  const { isAuthenticated, updateIsAuthenticated } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    updateIsAuthenticated(null);
+  };
 
   return (
     <nav className="bg-white border-b border-gray-200 h-16 flex items-center">
@@ -32,12 +38,12 @@ function Navbar() {
               >
                 Details
               </NavLink>
-              <span
-                to="/details"
-                className="text-gray-600 hover:text-brand mx-2"
+              <Button
+                onPress={handleLogout}
+                className="text-accent bg-transparent"
               >
                 Logout
-              </span>
+              </Button>
             </>
           )}
         </div>

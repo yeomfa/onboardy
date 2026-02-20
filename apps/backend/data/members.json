@@ -24,21 +24,21 @@
     "secondName": "",
     "firstLastName": "",
     "secondLastName": "",
-    "authorizeEmail": false,
-    "authorizeSms": false
+    "authorizeEmail": true,
+    "authorizeSms": true
   },
   {
     "id": 3,
-    "identificationNumber": 12345678,
-    "identificationType": "cc",
+    "identificationNumber": "1234567890",
+    "identificationType": "nit",
     "email": "member3@example.com",
     "cellphone": "1234567890",
-    "companyName": "",
+    "companyName": "Company 3",
     "firstName": "Jane",
     "secondName": "Miley",
     "firstLastName": "Doe",
     "secondLastName": "",
-    "authorizeEmail": false,
-    "authorizeSms": false
+    "authorizeEmail": true,
+    "authorizeSms": true
   }
 ]

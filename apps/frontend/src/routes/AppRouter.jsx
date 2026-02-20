@@ -2,16 +2,18 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { DetailsForm, Hero, Registration, NotFound } from '../pages';
 import { MainLayout } from '../shared/components/layouts/MainLayout';
 import { ProtectedRoute } from './ProtectedRoute';
+import { useContext } from 'react';
+import { AuthContext } from '../shared/auth/AuthContext';
 
 export function AppRouter() {
-  // TODO: Replace with real authentication logic
-  const isAuthenticated = true;
-
+  const { isAuthenticated } = useContext(AuthContext);
   return (
     <Routes>
       <Route
         path="/registration"
-        element={!isAuthenticated ? <Registration /> : <Navigate to="/" />}
+        element={
+          !isAuthenticated ? <Registration /> : <Navigate to="/details" />
+        }
       />
 
       <Route element={<MainLayout />}>

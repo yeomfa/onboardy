@@ -10,8 +10,11 @@ import {
   Select,
   TextField,
 } from '@heroui/react';
+import { useContext, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../shared/auth/AuthContext';
+import { notify } from '../shared/helpers/notify';
 
 const identificationTypes = [
   { id: 'cc', name: 'Cédula de Ciudadanía (CC)' },
@@ -19,9 +22,65 @@ const identificationTypes = [
 ];
 
 export function DetailsForm() {
-  const { register, control, handleSubmit } = useForm();
+  const { token } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const onSubmit = (data) => console.log(data);
+  const {
+    control,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { isSubmitting },
+  } = useForm();
+
+  const selectedIdentificationType = watch('identificationType');
+
+  useEffect(() => {
+    const fetchMemberData = async () => {
+      try {
+        const res = await fetch('/api/api/v1/members/me', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!res.ok) throw new Error('Could not fetch member data');
+
+        const result = await res.json();
+        reset(result.data.member);
+      } catch (error) {
+        notify.error(
+          'Error',
+          'Session expired or invalid. Please login again.',
+        );
+        navigate('/registration');
+      }
+    };
+
+    if (token) fetchMemberData();
+  }, [token, reset, navigate]);
+
+  const onSubmit = async (data) => {
+    try {
+      const res = await fetch('/api/api/v1/members/update', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) throw new Error('Update failed');
+
+      notify.success(
+        'Updated!',
+        'Your information has been saved in the system.',
+      );
+    } catch (error) {
+      notify.error('Update failed', error.message);
+    }
+  };
 
   return (
     <div className="bg-gray-500/3 p-8 rounded-4xl">
@@ -45,23 +104,21 @@ export function DetailsForm() {
       >
         <div className="grid grid-cols-2 gap-4">
           <Controller
-            name="entityType"
+            name="identificationType"
             control={control}
             render={({ field }) => (
               <Select
                 isRequired
                 className="w-full"
                 placeholder="Select an option"
-                value={field.value}
+                value={field.value || null}
                 onChange={field.onChange}
               >
                 <Label>Identification Type</Label>
-
                 <Select.Trigger>
                   <Select.Value />
                   <Select.Indicator />
                 </Select.Trigger>
-
                 <Select.Popover>
                   <ListBox>
                     {identificationTypes.map((type) => (
@@ -79,88 +136,151 @@ export function DetailsForm() {
               </Select>
             )}
           />
-          <TextField isRequired name="identificationNumber">
-            <Label>Identification Number</Label>
-            <Input
-              {...register('identificationNumber')}
-              placeholder="Enter the identification number"
-              type="number"
-            />
-          </TextField>
-        </div>
 
-        <TextField isRequired name="companyName">
-          <Label>Company Name</Label>
-          <Input
-            {...register('companyName')}
-            placeholder="Enter the company name"
-            type="text"
+          <Controller
+            name="identificationNumber"
+            control={control}
+            render={({ field }) => (
+              <TextField isRequired>
+                <Label>Identification Number</Label>
+                <Input
+                  {...field}
+                  value={field.value || ''}
+                  placeholder="Enter the identification number"
+                  type="number"
+                />
+              </TextField>
+            )}
           />
-        </TextField>
-
-        <div className="grid grid-cols-2 gap-4">
-          <TextField isRequired name="firstName">
-            <Label>First Name</Label>
-            <Input
-              {...register('firstName')}
-              placeholder="Enter the first name"
-              type="text"
-            />
-          </TextField>
-          <TextField name="secondName">
-            <Label>Second Name</Label>
-            <Input
-              {...register('secondName')}
-              placeholder="Enter the second name"
-              type="text"
-            />
-          </TextField>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <TextField isRequired name="firstLastName">
-            <Label>First Last Name</Label>
-            <Input
-              {...register('firstLastName')}
-              placeholder="Enter the first last name"
-              type="text"
-            />
-          </TextField>
-          <TextField name="secondLastName">
-            <Label>Second Last Name</Label>
-            <Input
-              {...register('secondLastName')}
-              placeholder="Enter the second last name"
-              type="text"
-            />
-          </TextField>
-        </div>
+        {selectedIdentificationType === 'nit' && (
+          <Controller
+            name="companyName"
+            control={control}
+            render={({ field }) => (
+              <TextField isRequired>
+                <Label>Company Name</Label>
+                <Input
+                  {...field}
+                  value={field.value || ''}
+                  placeholder="Enter the company name"
+                  type="text"
+                />
+              </TextField>
+            )}
+          />
+        )}
+
+        {selectedIdentificationType === 'cc' && (
+          <>
+            <div className="grid grid-cols-2 gap-4">
+              <Controller
+                name="firstName"
+                control={control}
+                render={({ field }) => (
+                  <TextField isRequired>
+                    <Label>First Name</Label>
+                    <Input
+                      {...field}
+                      value={field.value || ''}
+                      placeholder="Enter the first name"
+                      type="text"
+                    />
+                  </TextField>
+                )}
+              />
+              <Controller
+                name="secondName"
+                control={control}
+                render={({ field }) => (
+                  <TextField>
+                    <Label>Second Name</Label>
+                    <Input
+                      {...field}
+                      value={field.value || ''}
+                      placeholder="Enter the second name"
+                      type="text"
+                    />
+                  </TextField>
+                )}
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <Controller
+                name="firstLastName"
+                control={control}
+                render={({ field }) => (
+                  <TextField isRequired>
+                    <Label>First Last Name</Label>
+                    <Input
+                      {...field}
+                      value={field.value || ''}
+                      placeholder="Enter the first last name"
+                      type="text"
+                    />
+                  </TextField>
+                )}
+              />
+              <Controller
+                name="secondLastName"
+                control={control}
+                render={({ field }) => (
+                  <TextField>
+                    <Label>Second Last Name</Label>
+                    <Input
+                      {...field}
+                      value={field.value || ''}
+                      placeholder="Enter the second last name"
+                      type="text"
+                    />
+                  </TextField>
+                )}
+              />
+            </div>
+          </>
+        )}
 
         <div className="grid grid-cols-2 gap-4">
-          <TextField isRequired name="email">
-            <Label>Email</Label>
-            <Input
-              {...register('email')}
-              placeholder="Enter the email"
-              type="email"
-            />
-          </TextField>
-          <TextField isRequired name="cellphone">
-            <Label>Cell Phone</Label>
-            <Input
-              {...register('cellphone')}
-              placeholder="Enter the cell phone number"
-              type="tel"
-            />
-          </TextField>
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <TextField isRequired>
+                <Label>Email</Label>
+                <Input
+                  {...field}
+                  value={field.value || ''}
+                  placeholder="Enter the email"
+                  type="email"
+                />
+              </TextField>
+            )}
+          />
+          <Controller
+            name="cellphone"
+            control={control}
+            render={({ field }) => (
+              <TextField isRequired>
+                <Label>Cell Phone</Label>
+                <Input
+                  {...field}
+                  value={field.value || ''}
+                  placeholder="Enter the cell phone number"
+                  type="tel"
+                />
+              </TextField>
+            )}
+          />
         </div>
+
         <Controller
           name="authorizeSms"
           control={control}
-          defaultValue={false}
           render={({ field }) => (
             <div className="flex gap-3">
-              <Checkbox isSelected={field.value} onChange={field.onChange}>
+              <Checkbox isSelected={!!field.value} onChange={field.onChange}>
                 <Checkbox.Control>
                   <Checkbox.Indicator />
                 </Checkbox.Control>
@@ -173,13 +293,13 @@ export function DetailsForm() {
             </div>
           )}
         />
+
         <Controller
           name="authorizeEmail"
           control={control}
-          defaultValue={false}
           render={({ field }) => (
             <div className="flex gap-3">
-              <Checkbox isSelected={field.value} onChange={field.onChange}>
+              <Checkbox isSelected={!!field.value} onChange={field.onChange}>
                 <Checkbox.Control>
                   <Checkbox.Indicator />
                 </Checkbox.Control>
@@ -196,7 +316,9 @@ export function DetailsForm() {
 
         <div className="flex justify-end items-center gap-4 mt-6">
           <Link to={'/'}>Go to Home</Link>
-          <Button type="submit">Continue</Button>
+          <Button type="submit" isLoading={isSubmitting}>
+            Continue
+          </Button>
         </div>
       </Form>
     </div>

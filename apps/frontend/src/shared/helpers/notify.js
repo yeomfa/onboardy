@@ -19,7 +19,7 @@ export const notify = {
       timeout,
     });
   },
-  error(title, description = '', timeout = 0) {
+  error(title, description = '', timeout = 10000) {
     toast(title, {
       actionProps: {
         onPress: () => toast.clear(),
