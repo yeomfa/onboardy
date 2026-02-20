@@ -29,9 +29,6 @@ export class Member {
   }
 
   validate() {
-    if (!this.id) {
-      throw new Error('Member ID is required');
-    }
     if (!this.identificationNumber) {
       throw new Error('Identification number is required');
     }

@@ -12,8 +12,7 @@ export class UpdateMember {
       if (!memberObj) {
         throw new Error('Member not found');
       }
-
-      const member = new Member({ ...memberObj, ...newData });
+      const member = new Member({ id, ...newData });
 
       return await this.memberRepository.update(member.toObject());
     } catch (error) {
