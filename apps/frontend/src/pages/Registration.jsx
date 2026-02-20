@@ -1,16 +1,25 @@
-import { Alert, Button, Input, Label, Form } from '@heroui/react';
+import {
+  Alert,
+  Button,
+  Input,
+  Label,
+  Form,
+  Spinner,
+  TextField,
+  FieldError,
+} from '@heroui/react';
 import { Link } from 'react-router-dom';
 import { notify } from '../shared/helpers/notify';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useContext } from 'react';
 import { AuthContext } from '../shared/auth/AuthContext';
 
 export function Registration() {
-  const { register, handleSubmit } = useForm();
+  const { control, handleSubmit, formState } = useForm();
   const { updateIsAuthenticated } = useContext(AuthContext);
 
-  const onSubmit = async (data) => {
-    const { identificationNumber } = data;
+  const onSubmit = async (formData) => {
+    const { identificationNumber } = formData;
 
     try {
       const res = await fetch('/api/api/v1/members/login', {
@@ -52,23 +61,45 @@ export function Registration() {
           <img src="/onboardy.svg" alt="Onboardy Logo" className="w-10 h-10" />
         </div>
         <Form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-          <Label htmlFor="identificationNumber">Identification number</Label>
-          <Input
-            {...register('identificationNumber', {
-              required: true,
-              minLength: 5,
-            })}
-            id="identificationNumber"
-            min={0}
-            placeholder="Enter the identification number (min 5 characters)"
-            type="number"
+          <Controller
+            name="identificationNumber"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                isRequired
+                minLength={5}
+                validate={(value) => {
+                  if (value.length < 5)
+                    return 'Identification number must be at least 5 characters';
+                }}
+              >
+                <Label>Identification Number</Label>
+                <Input
+                  {...field}
+                  value={field.value || ''}
+                  placeholder="Enter the identification number"
+                  type="number"
+                />
+                <FieldError />
+              </TextField>
+            )}
           />
-
           <div className="flex justify-end items-center gap-4 mt-6">
             <Link to={'/'} className="text-gray-700">
               Go back
             </Link>
-            <Button type="submit">Continue</Button>
+            <Button
+              type="submit"
+              isPending={formState.isSubmitting}
+              spinner={<Spinner size="sm" />}
+            >
+              {({ isPending }) => (
+                <>
+                  {isPending && <Spinner color="current" size="sm" />}
+                  Continue
+                </>
+              )}
+            </Button>
           </div>
         </Form>
       </div>

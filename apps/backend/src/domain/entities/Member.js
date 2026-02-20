@@ -54,8 +54,8 @@ export class Member {
 
   toObject() {
     return {
-      id: this.id,
-      identificationNumber: this.identificationNumber,
+      id: +this.id,
+      identificationNumber: +this.identificationNumber,
       identificationType: this.identificationType,
       email: this.email,
       cellphone: this.cellphone,

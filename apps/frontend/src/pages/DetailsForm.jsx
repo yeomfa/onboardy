@@ -3,11 +3,13 @@ import {
   Button,
   Checkbox,
   Description,
+  FieldError,
   Form,
   Input,
   Label,
   ListBox,
   Select,
+  Spinner,
   TextField,
 } from '@heroui/react';
 import { useContext, useEffect } from 'react';
@@ -15,6 +17,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../shared/auth/AuthContext';
 import { notify } from '../shared/helpers/notify';
+import { useState } from 'react';
 
 const identificationTypes = [
   { id: 'cc', name: 'Cédula de Ciudadanía (CC)' },
@@ -22,6 +25,7 @@ const identificationTypes = [
 ];
 
 export function DetailsForm() {
+  const [isLoadingMember, setIsLoadingMember] = useState(true);
   const { token, updateIsAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -55,6 +59,8 @@ export function DetailsForm() {
         );
         updateIsAuthenticated(null);
         navigate('/registration');
+      } finally {
+        setIsLoadingMember(false);
       }
     };
 
@@ -82,6 +88,14 @@ export function DetailsForm() {
       notify.error('Update failed', error.message);
     }
   };
+
+  if (isLoadingMember) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <Spinner size="lg" />
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gray-500/3 p-8 rounded-4xl">
@@ -142,7 +156,7 @@ export function DetailsForm() {
             name="identificationNumber"
             control={control}
             render={({ field }) => (
-              <TextField isRequired>
+              <TextField isRequired minLength={5}>
                 <Label>Identification Number</Label>
                 <Input
                   {...field}
@@ -150,6 +164,7 @@ export function DetailsForm() {
                   placeholder="Enter the identification number"
                   type="number"
                 />
+                <FieldError />
               </TextField>
             )}
           />
@@ -269,7 +284,7 @@ export function DetailsForm() {
                   {...field}
                   value={field.value || ''}
                   placeholder="Enter the cell phone number"
-                  type="tel"
+                  type="number"
                 />
               </TextField>
             )}
@@ -317,8 +332,17 @@ export function DetailsForm() {
 
         <div className="flex justify-end items-center gap-4 mt-6">
           <Link to={'/'}>Go to Home</Link>
-          <Button type="submit" isLoading={isSubmitting}>
-            Continue
+          <Button
+            type="submit"
+            isPending={isSubmitting}
+            spinner={<Spinner size="sm" />}
+          >
+            {({ isPending }) => (
+              <>
+                {isPending && <Spinner color="current" size="sm" />}
+                Continue
+              </>
+            )}
           </Button>
         </div>
       </Form>

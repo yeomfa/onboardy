@@ -15,7 +15,7 @@ const { PORT = 3000, JWT_SECRET = 'temp_jwt_secret' } = process.env;
 // Services
 const jwtService = new JwtService(JWT_SECRET);
 
-// Improve this with a subclass of Repository for members, and move it to a separate file
+// Repositories
 const memberRepository = new MemberRepository();
 
 // Use cases
