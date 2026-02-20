@@ -11,10 +11,11 @@ export const createMemberRouter = (memberController, jwtService) => {
     .get(memberController.getMe.bind(memberController))
     .patch(memberController.updateMe.bind(memberController));
 
+  // This route is for testing purposes and should not be exposed in production without proper authorization checks
   router
     .route('/:id')
     .get(memberController.get.bind(memberController))
-    .patch(memberController.update.bind(memberController));
+    .patch(auth, memberController.update.bind(memberController));
 
   router.post('/login', memberController.login.bind(memberController));
 
